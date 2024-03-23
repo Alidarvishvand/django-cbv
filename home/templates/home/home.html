@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    
+    {% for car in cars %}
+        <p>{{car.name}}</p>
+    {% endfor %}
 {% endblock %}
