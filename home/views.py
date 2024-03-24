@@ -4,14 +4,15 @@ from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render
 from django.views import View
 from . models import Car
-from django.views.generic import TemplateView,RedirectView
+from django.views.generic import TemplateView,RedirectView,MonthArchiveView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView,CreateView
+from django.views.generic.edit import FormView,CreateView,DeleteView,UpdateView
 from .form import CarCreateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 # Create your views here.
+from django.contrib.auth import views as auth_views
 
 
 class home(View):
@@ -87,3 +88,32 @@ class CreateCarView(CreateView):
         car.save()
         messages.success(self.request,'create car successfully','success')
         return super().form_valid(form)
+    
+
+class CarDelete(DeleteView):
+    model = Car
+    success_url = reverse_lazy('home:home')
+    template_name = 'home/delete.html'
+
+
+class Carupdate(UpdateView):
+    model = Car
+    fields = ['name']
+    success_url = reverse_lazy('home:home')
+    template_name = 'home/update.html'
+
+
+class UserLogin(auth_views.LoginView):
+    template_name = 'home/login.html'
+    next_page = reverse_lazy('home:home')
+
+class UserLogout(auth_views.LogoutView):
+    next_page = reverse_lazy('home:home')
+
+
+class MonthCar(MonthArchiveView):
+    model = Car
+    date_field = 'created'
+    template_name = 'home/home.html'
+    context_object_name = 'cars'
+    month_format='%m'

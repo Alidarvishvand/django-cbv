@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
     {% for car in cars %}
-        <p>{{car.name}}</p>
-    {% endfor %}
+        
+        <p> {{ car.name }}</p> <a href="{% url 'home:car_delete' car.id %}">delete</a>
+                <a href="{% url 'home:car_update' car.id %}">update</a>
+    {% endfor %} 
 {% endblock %}

@@ -72,6 +72,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'A.wsgi.application'
 
+# LOGIN_REDIRECT_URL = 'home:home'
+
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
